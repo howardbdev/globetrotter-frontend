@@ -31,3 +31,9 @@
     transform: rotate(360deg);
   }
 }
+
+.NavBar {
+  display: flex;
+  flex-direction: row;
+  color: red;
+}
