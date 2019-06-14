@@ -7,7 +7,7 @@ import Logout from "./Logout.js"
 const NavBar = ({ currentUser }) => {
   return (
     <div className="NavBar">
-      { currentUser ? <strong>Welcome, {currentUser.name}</strong> : "" }
+      { currentUser ? <strong>Welcome, {currentUser.attributes.name} from {currentUser.attributes.hometown.city}</strong> : "" }
       { currentUser ? <Logout/> : <Login/> }
     </div>
   )
