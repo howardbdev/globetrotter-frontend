@@ -7,6 +7,12 @@ export const setMyTrips = trips => {
   }
 }
 
+export const clearTrips = () => {
+  return {
+    type: "CLEAR_TRIPS"
+  }
+}
+
 // async actions
 
 export const getMyTrips = () => {
