@@ -10,7 +10,7 @@ import Signup from './components/Signup.js'
 import MyTrips from './components/MyTrips.js'
 import NewTripForm from './components/NewTripForm.js'
 import MainContainer from './components/MainContainer.js'
-import { Route, Switch, withRouter } from 'react-router-dom'
+import { Route, Switch, withRouter, Link } from 'react-router-dom'
 
 class App extends React.Component {
 
@@ -22,12 +22,13 @@ class App extends React.Component {
     const { loggedIn } = this.props
     return (
       <div className="App">
-        { loggedIn ? <Logout/> : null}
-        <Route exact path='/signup' render={({history})=><Signup history={history}/>}/>
-        <Route exact path='/login' component={Login}/>
-        <Route exact path='/' render={(props)=> loggedIn ? <MyTrips {...props}/> : <Home {...props}/>}/>
-        <Route exact path='/trips' component={MyTrips}/>
-        <Route exact path='/trips/new' component={NewTripForm}/>
+        { loggedIn ? <NavBar {...this.props}/> : <Home/> }
+        <Switch>
+          <Route exact path='/signup' render={({history})=><Signup history={history}/>}/>
+          <Route exact path='/login' component={Login}/>
+          <Route exact path='/trips' component={MyTrips}/>
+          <Route exact path='/trips/new' component={NewTripForm}/>
+        </Switch>
       </div>
     );
 
