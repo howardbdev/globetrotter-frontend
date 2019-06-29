@@ -1,15 +1,37 @@
 import React from 'react';
+// 1.  VVV We first grab the action creator
 import { updateNewTripForm } from '../actions/newTripForm'
+import { createTrip } from '../actions/myTrips'
 import { connect } from 'react-redux'
 
-const NewTripForm = ({name, startDate, endDate, history}) => {
+
+// 3.  This means Redux gives us back a prop called updateNewTripForm
+// which when invoked, actually Redux will now dispatch
+const NewTripForm = ({ formData, history, updateNewTripForm, createTrip, userId }) => {
+  const { name, startDate, endDate } = formData
 
   const handleChange = event => {
+    console.log("trigger Handle change")
     const { name, value } = event.target
+    // 4.  This is not an invocation of just the action creator,
+    // it's not Redux dispatching the action built by the actions
+    // creator with the appropriate arguments
     updateNewTripForm(name, value)
   }
 
-  const handleSubmit = event => event.preventDefault()
+  const handleSubmit = event => {
+    event.preventDefault()
+    createTrip({
+      ...formData,
+      userId
+    })
+
+    // formData: {
+    //   name: ""
+    //   startDate: ""
+    //   endDate: ""
+    // }
+  }
 
   return (
     <form onSubmit={handleSubmit}>
@@ -39,12 +61,13 @@ const NewTripForm = ({name, startDate, endDate, history}) => {
 )};
 
 const mapStateToProps = state => {
-  const { startDate, endDate, name } = state.newTripForm
+  const userId = state.currentUser ? state.currentUser.id : "" 
   return {
-    startDate,
-    endDate,
-    name
+    formData: state.newTripForm,
+    userId
   }
 }
 
-export default connect(mapStateToProps, { updateNewTripForm })(NewTripForm);
+// 2.  We pass the action creator to redux's connect function
+// using either mapDispatchToProps or the shorthand object syntax seen below.
+export default connect(mapStateToProps, { updateNewTripForm, createTrip })(NewTripForm);
