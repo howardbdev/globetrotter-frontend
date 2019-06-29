@@ -13,6 +13,13 @@ export const clearTrips = () => {
   }
 }
 
+export const addTrip = trip => {
+  return {
+    type: "ADD_TRIP",
+    trip
+  }
+}
+
 // async actions
 
 export const getMyTrips = () => {
@@ -34,5 +41,28 @@ export const getMyTrips = () => {
         }
       })
       .catch(console.log)
+  }
+}
+
+export const createTrip = tripData => {
+  return dispatch => {
+    const sendableTripData = {
+      start_date: tripData.startDate,
+      end_date: tripData.endDate,
+      name: tripData.name,
+      user_id: tripData.userId
+    }
+    return fetch("http://localhost:3001/api/v1/trips", {
+      credentials: "include",
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(sendableTripData)
+    })
+      .then(r => r.json())
+      .then(console.log)
+      .catch(console.log)
+
   }
 }
