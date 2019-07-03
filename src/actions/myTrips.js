@@ -1,4 +1,4 @@
-
+import { resetNewTripForm } from './newTripForm'
 // synchronous actions
 export const setMyTrips = trips => {
   return {
@@ -44,7 +44,7 @@ export const getMyTrips = () => {
   }
 }
 
-export const createTrip = tripData => {
+export const createTrip = (tripData, history) => {
   return dispatch => {
     const sendableTripData = {
       start_date: tripData.startDate,
@@ -61,7 +61,17 @@ export const createTrip = tripData => {
       body: JSON.stringify(sendableTripData)
     })
       .then(r => r.json())
-      .then(console.log)
+      .then(resp => {
+        if (resp.error) {
+          alert(resp.error)
+        } else {
+          dispatch(addTrip(resp.data))
+          dispatch(resetNewTripForm())
+          history.push(`/trips/${resp.data.id}`)
+          // go somewhere else --> trip show?
+          // add the new trip to the store
+        }
+      })
       .catch(console.log)
 
   }
