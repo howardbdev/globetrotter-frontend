@@ -6,6 +6,9 @@ export default (state = initialState, action) => {
       return action.trips
     case "ADD_TRIP":
       return state.concat(action.trip)
+    case "UPDATE_TRIP":
+      console.log("in UPDATE TRIP action is", action)
+      return state
     case "CLEAR_TRIPS":
       return initialState
     default:
