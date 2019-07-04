@@ -1,4 +1,4 @@
-import { resetNewTripForm } from './newTripForm'
+import { resetTripForm } from './tripForm'
 // synchronous actions
 export const setMyTrips = trips => {
   return {
@@ -16,6 +16,13 @@ export const clearTrips = () => {
 export const addTrip = trip => {
   return {
     type: "ADD_TRIP",
+    trip
+  }
+}
+
+export const updateTripSuccess = trip => {
+  return {
+    type: "UPDATE_TRIP",
     trip
   }
 }
@@ -66,7 +73,40 @@ export const createTrip = (tripData, history) => {
           alert(resp.error)
         } else {
           dispatch(addTrip(resp.data))
-          dispatch(resetNewTripForm())
+          dispatch(resetTripForm())
+          history.push(`/trips/${resp.data.id}`)
+          // go somewhere else --> trip show?
+          // add the new trip to the store
+        }
+      })
+      .catch(console.log)
+
+  }
+}
+
+export const updateTrip = (tripData, history) => {
+  return dispatch => {
+    const sendableTripData = {
+      start_date: tripData.startDate,
+      end_date: tripData.endDate,
+      name: tripData.name,
+      user_id: tripData.userId
+    }
+    return fetch(`http://localhost:3001/api/v1/trips/${tripData.tripId}`, {
+      credentials: "include",
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(sendableTripData)
+    })
+      .then(r => r.json())
+      .then(resp => {
+        if (resp.error) {
+          alert(resp.error)
+        } else {
+          dispatch(updateTripSuccess(resp.data))
+          dispatch(resetTripForm())
           history.push(`/trips/${resp.data.id}`)
           // go somewhere else --> trip show?
           // add the new trip to the store
