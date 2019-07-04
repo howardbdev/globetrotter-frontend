@@ -8,10 +8,13 @@ import Login from './components/Login.js'
 import Logout from './components/Logout.js'
 import Signup from './components/Signup.js'
 import MyTrips from './components/MyTrips.js'
-import NewTripForm from './components/NewTripForm.js'
+import TripForm from './components/TripForm.js'
 import TripCard from './components/TripCard.js'
 import MainContainer from './components/MainContainer.js'
+import NewTripFormWrapper from './components/NewTripFormWrapper.js'
+import EditTripFormWrapper from './components/EditTripFormWrapper.js'
 import { Route, Switch, withRouter, Link } from 'react-router-dom'
+import { setFormDataForEdit } from './actions/tripForm.js'
 
 class App extends React.Component {
 
@@ -20,7 +23,7 @@ class App extends React.Component {
   }
 
   render(){
-    const { loggedIn, trips } = this.props
+    const { loggedIn, trips, setFormDataForEdit } = this.props
     return (
       <div className="App">
         { loggedIn ? <NavBar location={this.props.location}/> : <Home/> }
@@ -28,7 +31,7 @@ class App extends React.Component {
           <Route exact path='/signup' render={({history})=><Signup history={history}/>}/>
           <Route exact path='/login' component={Login}/>
           <Route exact path='/trips' component={MyTrips}/>
-          <Route exact path='/trips/new' component={NewTripForm}/>
+          <Route exact path='/trips/new' component={NewTripFormWrapper}/>
           <Route exact path='/trips/:id' render={props => {
               // I need to get ???
               const trip = trips.find(trip => trip.id === props.match.params.id)
@@ -40,8 +43,7 @@ class App extends React.Component {
               // I need to get ???
               const trip = trips.find(trip => trip.id === props.match.params.id)
               // dispatch updateForm -> trip
-              console.log(trip)
-              return <NewTripForm trip={trip} {...props}/>
+              return <EditTripFormWrapper trip={trip} {...props}/>
             }
           }/>
         </Switch>
@@ -58,4 +60,4 @@ const mapStateToProps = state => {
   })
 }
 
-export default withRouter(connect(mapStateToProps, { getCurrentUser })(App));
+export default withRouter(connect(mapStateToProps, { getCurrentUser, setFormDataForEdit })(App));
