@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 
 
 // 3.  This means Redux gives us back a prop called updateTripForm
-// which when invoked, actually Redux will now dispatch
+// which when invoked, Redux will now dispatch
 const TripForm = ({ formData, history, updateTripForm, userId, trip, handleSubmit, editMode }) => {
 
   const { name, startDate, endDate } = formData
@@ -14,7 +14,7 @@ const TripForm = ({ formData, history, updateTripForm, userId, trip, handleSubmi
     console.log("trigger Handle change")
     const { name, value } = event.target
     // 4.  This is not an invocation of just the action creator,
-    // it's now Redux dispatching the action built by the actions
+    // it's now Redux dispatching the action built by the action
     // creator with the appropriate arguments
     updateTripForm(name, value)
   }
