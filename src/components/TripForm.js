@@ -14,7 +14,7 @@ const TripForm = ({ formData, history, updateTripForm, userId, trip, handleSubmi
     console.log("trigger Handle change")
     const { name, value } = event.target
     // 4.  This is not an invocation of just the action creator,
-    // it's not Redux dispatching the action built by the actions
+    // it's now Redux dispatching the action built by the actions
     // creator with the appropriate arguments
     updateTripForm(name, value)
   }
