@@ -20,6 +20,13 @@ export const addTrip = trip => {
   }
 }
 
+export const deleteTripSuccess = tripId => {
+  return {
+    type: "DELETE_TRIP",
+    tripId
+  }
+}
+
 export const updateTripSuccess = trip => {
   return {
     type: "UPDATE_TRIP",
