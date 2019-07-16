@@ -5,16 +5,12 @@ import { getCurrentUser } from "./actions/currentUser.js"
 import NavBar from './components/NavBar.js'
 import Home from './components/Home.js'
 import Login from './components/Login.js'
-import Logout from './components/Logout.js'
 import Signup from './components/Signup.js'
 import MyTrips from './components/MyTrips.js'
-import TripForm from './components/TripForm.js'
 import TripCard from './components/TripCard.js'
-import MainContainer from './components/MainContainer.js'
 import NewTripFormWrapper from './components/NewTripFormWrapper.js'
 import EditTripFormWrapper from './components/EditTripFormWrapper.js'
-import { Route, Switch, withRouter, Link } from 'react-router-dom'
-import { setFormDataForEdit } from './actions/tripForm.js'
+import { Route, Switch, withRouter } from 'react-router-dom'
 
 class App extends React.Component {
 
@@ -23,7 +19,7 @@ class App extends React.Component {
   }
 
   render(){
-    const { loggedIn, trips, setFormDataForEdit } = this.props
+    const { loggedIn, trips } = this.props
     return (
       <div className="App">
         { loggedIn ? <NavBar location={this.props.location}/> : <Home/> }
@@ -60,4 +56,4 @@ const mapStateToProps = state => {
   })
 }
 
-export default withRouter(connect(mapStateToProps, { getCurrentUser, setFormDataForEdit })(App));
+export default withRouter(connect(mapStateToProps, { getCurrentUser })(App));
