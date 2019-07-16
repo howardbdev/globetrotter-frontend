@@ -5,9 +5,7 @@ import { connect } from 'react-redux'
 
 const NewTripFormWrapper = ({ history, createTrip }) => {
 
-  const handleSubmit = (event, formData, userId, history) => {
-    event.preventDefault()
-    console.log("in handleSubmit, event is ", event)
+  const handleSubmit = (formData, userId) => {
     createTrip({
       ...formData,
       userId
